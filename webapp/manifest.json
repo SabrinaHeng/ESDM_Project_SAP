@@ -8,6 +8,19 @@
     "dataSources": {},
     "applicationVersion": {
       "version": "1.0.0"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "app-preview": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "Shell",
+          "action": "app",
+          "title": "Credit Hour Validator"
+        }
+      }
     }
   },
   "sap.ui": {
