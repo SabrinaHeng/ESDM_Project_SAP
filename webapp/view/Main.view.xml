@@ -1,0 +1,150 @@
+<mvc:View
+  controllerName="project1.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:tnt="sap.tnt"
+  xmlns:layout="sap.ui.layout"
+  displayBlock="true">
+
+  <f:ShellBar
+    id="shellBar"
+    title="Credit Hour Less"
+    showMenuButton="false">
+    <f:additionalContent>
+      <Text text="{data>/student/name}" />
+    </f:additionalContent>
+  </f:ShellBar>
+
+  <tnt:ToolPage id="toolPage">
+    <tnt:header>
+      <tnt:ToolHeader>
+        <Title text="Course Registration" level="H3" />
+      </tnt:ToolHeader>
+    </tnt:header>
+
+    <tnt:sideContent>
+      <tnt:SideNavigation>
+        <tnt:NavigationList>
+          <tnt:NavigationListItem text="View Profile" />
+          <tnt:NavigationListItem text="Academic Matters" />
+          <tnt:NavigationListItem text="Timetable" />
+          <tnt:NavigationListItem text="Credit Transfer" />
+          <tnt:NavigationListItem text="Course Registration" selected="true" />
+          <tnt:NavigationListItem text="Student Experience" />
+          <tnt:NavigationListItem text="Industrial Training" />
+        </tnt:NavigationList>
+      </tnt:SideNavigation>
+    </tnt:sideContent>
+
+    <tnt:mainContents>
+      <VBox class="sapUiSmallMargin">
+        <HBox justifyContent="SpaceBetween" alignItems="Center">
+          <SearchField width="60%" placeholder="Search by course name, code, or lecturer..." />
+          <Button text="Filters" type="Transparent" />
+        </HBox>
+
+        <layout:Grid
+          defaultSpan="L8 M12 S12"
+          width="100%"
+          class="sapUiMediumMarginTop">
+
+          <layout:content>
+            <!-- Courses card -->
+            <VBox class="sapUiTinyMarginEnd crCard">
+              <Title text="Available Courses" level="H4" />
+              <Text
+                text="Showing {= ${data>/availableCourses}.length || 0} courses"
+                class="sapUiTinyMarginBottom" />
+
+              <Table
+                id="courseTable"
+                items="{
+                  path: 'data>/availableCourses'
+                }">
+                <columns>
+                  <Column>
+                    <Text text="Code" />
+                  </Column>
+                  <Column>
+                    <Text text="Course Name" />
+                  </Column>
+                  <Column>
+                    <Text text="Credit Hours" />
+                  </Column>
+                  <Column>
+                    <Text text="Type" />
+                  </Column>
+                  <Column>
+                    <Text text="Section" />
+                  </Column>
+                  <Column hAlign="Center">
+                    <Text text="Action" />
+                  </Column>
+                </columns>
+                <items>
+                  <ColumnListItem>
+                    <cells>
+                      <Text text="{data>code}" />
+                      <VBox>
+                        <Text text="{data>name}" class="crCourseName" />
+                        <Text text="{data>lecturer}" class="crCourseLecturer" />
+                        <Text text="{data>schedule}" class="crCourseSchedule" />
+                      </VBox>
+                      <Text text="{data>credits}" />
+                      <ObjectStatus text="{data>type}" />
+                      <Text text="{data>section}" />
+                      <Button
+                        text="{= ${data>selected} ? '-' : '+' }"
+                        type="Emphasized"
+                        press=".onToggleCourse" />
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
+            </VBox>
+
+            <!-- Pending registration card -->
+            <VBox class="crCard">
+              <Title text="Pending Registration" level="H4" />
+              <Text
+                text="{view>/selectedCount} Subjects Selected"
+                class="sapUiTinyMarginBottom" />
+
+              <ObjectStatus
+                text="{view>/statusText}"
+                state="{view>/statusState}" />
+
+              <MessageStrip
+                text="{view>/warningText}"
+                type="{= ${view>/statusState} === 'Error' ? 'Error' : 'Warning' }"
+                showIcon="true"
+                showCloseButton="false"
+                visible="{view>/warningVisible}"
+                class="sapUiSmallMarginTop" />
+
+              <Button
+                text="Register for Courses"
+                type="Emphasized"
+                enabled="{= !${view>/warningVisible} && ${view>/selectedCount} > 0 }"
+                press=".onRegister"
+                class="sapUiSmallMarginTop" />
+
+              <Button
+                text="Save Draft"
+                type="Default"
+                class="sapUiTinyMarginTop" />
+
+              <Text
+                text="Note: Registration is subject to course availability and prerequisite requirements."
+                wrapping="true"
+                class="sapUiTinyMarginTop" />
+            </VBox>
+
+          </layout:content>
+        </layout:Grid>
+      </VBox>
+    </tnt:mainContents>
+  </tnt:ToolPage>
+</mvc:View>
+

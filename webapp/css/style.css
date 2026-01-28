@@ -1,0 +1,17 @@
+.crCard {
+  box-shadow: 0 4px 10px rgba(15, 35, 70, 0.08);
+  border-radius: 12px;
+  padding: 16px 18px;
+  background-color: #ffffff;
+}
+
+.crCourseName {
+  font-weight: bold;
+}
+
+.crCourseLecturer,
+.crCourseSchedule {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
