@@ -9,9 +9,10 @@
     displayBlock="true"
     height="100%">
     
-    <tnt:ToolHeader>
+    <!-- Custom Blue Header -->
+    <tnt:ToolHeader class="customToolHeader">
         <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/SAP-Logo.svg/1200px-SAP-Logo.svg.png" height="30px" />
-        <Title text="UTHM" wrapping="false" />
+        <Title text="UTHM" wrapping="false" class="sapUiTinyMarginBegin" />
         <ToolbarSpacer />
         <Button text="Course Registration" icon="sap-icon://education" type="Transparent" />
         <Button text="Hostel Management" icon="sap-icon://building" type="Transparent" />
@@ -43,20 +44,20 @@
         </tnt:sideContent>
         <tnt:mainContents>
             <App>
-                <Page showHeader="false">
+                <Page showHeader="false" backgroundDesign="Solid">
                     <content>
                         <layout:Grid defaultSpan="XL9 L9 M12 S12" hSpacing="1">
                             <!-- Left: Course List -->
                             <VBox class="sapUiSmallMargin">
                                 <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiMediumMarginBottom">
-                                    <SearchField placeholder="Search by course name, code, or lecturer..." width="80%" />
-                                    <Button text="Filters" icon="sap-icon://filter" />
+                                    <SearchField placeholder="Search by course name, code, or lecturer..." width="100%" /> 
+                                    <Button text="Filters" icon="sap-icon://filter" class="sapUiSmallMarginBegin" />
                                 </HBox>
 
-                                <Title text="Available Courses" titleStyle="H2" class="sapUiSmallMarginBottom" />
+                                <Title text="Available Courses" titleStyle="H2" class="courseTableTitle sapUiSmallMarginBottom" />
                                 <Text text="Showing {= ${courseModel>/availableCourses}.length } of {= ${courseModel>/availableCourses}.length } courses" class="sapUiSmallMarginBottom" />
 
-                                <Table items="{courseModel>/availableCourses}" mode="None">
+                                <Table items="{courseModel>/availableCourses}" mode="None" class="sapUiSmallMarginBottom">
                                     <columns>
                                         <Column width="15%"><Text text="Code" /></Column>
                                         <Column width="30%"><Text text="Course Name" /></Column>
@@ -71,17 +72,22 @@
                                                 <Text text="{courseModel>code}" />
                                                 <VBox>
                                                     <Title text="{courseModel>name}" level="H5" />
-                                                    <Text text="{courseModel>lecturer}" class="sapUiTinyMarginTop" />
-                                                    <Text text="{courseModel>schedule}" class="sapUiTinyMarginTop" />
+                                                    <Text text="{courseModel>lecturer}" class="sapUiTinyMarginTop textGray" />
+                                                    <Text text="{courseModel>schedule}" class="sapUiTinyMarginTop textGray" />
                                                 </VBox>
                                                 <Text text="{courseModel>credits}" />
                                                 <ObjectStatus text="{courseModel>type}" state="Information" inverted="true" />
                                                 <Text text="{courseModel>section}" />
-                                                <Button icon="sap-icon://add" type="Emphasized" press=".onAddCourse" />
+                                                <Button icon="sap-icon://add" type="Emphasized" press=".onAddCourse" tooltip="Add Course" />
                                             </cells>
                                         </ColumnListItem>
                                     </items>
                                 </Table>
+                                
+                                <!-- Footer within the main content area for scroll -->
+                                <HBox justifyContent="Center" class="customFooter">
+                                    <Text text="Copy right @ 2021 LMS Dashboard" />
+                                </HBox>
                             </VBox>
 
                             <!-- Right: Validator Panel -->
@@ -90,44 +96,46 @@
                             </layout:layoutData>
                             
                             <VBox class="sapUiSmallMargin">
-                                <Panel headerText="Pending Registration" width="100%" backgroundDesign="Solid" class="sapUiSmallMarginBottom">
-                                    <content>
-                                        <VBox alignItems="Center" class="sapUiMediumMarginTopBottom">
-                                            <Title text="{= ${courseModel>/registeredCourses}.length } Subjects Selected" level="H5" class="sapUiSmallMarginBottom" />
-                                            
-                                            <HBox alignItems="Center" justifyContent="Center">
-                                                <Title text="{courseModel>/ui/totalCredits}" titleStyle="H1" />
-                                                <Title text=" / {courseModel>/student/maxCredits} Credits" titleStyle="H3" class="sapUiTinyMarginBegin" />
-                                            </HBox>
+                                <!-- Card-like Container -->
+                                <VBox class="validatorPanel">
+                                    <Title text="Pending Registration" titleStyle="H4" class="pendingCardTitle" />
+                                    
+                                    <VBox alignItems="Center" class="sapUiMediumMarginTopBottom">
+                                        <Title text="{= ${courseModel>/registeredCourses}.length } Subjects Selected" level="H5" class="sapUiSmallMarginBottom" />
+                                        
+                                        <HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginBottom">
+                                            <Title text="{courseModel>/ui/totalCredits}" titleStyle="H1" />
+                                            <Title text=" / {courseModel>/student/maxCredits} Credits" titleStyle="H3" class="sapUiTinyMarginBegin" />
+                                        </HBox>
 
-                                            <!-- Validator Alert -->
-                                            <MessageStrip 
-                                                visible="{courseModel>/ui/isWarningVisible}" 
-                                                text="{courseModel>/ui/warningMessage}" 
-                                                type="{courseModel>/ui/warningType}" 
-                                                showIcon="true" 
-                                                class="sapUiSmallMarginTop" />
+                                        <!-- Custom Warning/Success Badge -->
+                                        <!-- Red Badge -->
+                                        <core:HTML content='&lt;div class="creditBadgeError"&gt;{courseModel>/ui/warningMessage}&lt;/div&gt;' 
+                                                   visible="{= ${courseModel>/ui/isWarningVisible} &amp;&amp; ${courseModel>/ui/warningType} === 'Error' || ${courseModel>/ui/warningType} === 'Warning' }" />
+                                        
+                                        <!-- Green Badge -->
+                                        <core:HTML content='&lt;div class="creditBadgeSuccess"&gt;Credit Hours OK&lt;/div&gt;'
+                                                   visible="{= !${courseModel>/ui/isWarningVisible} }" />
 
-                                             <tnt:InfoLabel 
-                                                text="Credit Hours OK" 
-                                                colorScheme="8" 
-                                                visible="{= ${courseModel>/ui/totalCredits} >= ${courseModel>/student/minCredits} && ${courseModel>/ui/totalCredits} <= ${courseModel>/student/maxCredits} }"
-                                                class="sapUiSmallMarginTop" />
+                                        <Text text="No courses selected" visible="{= ${courseModel>/registeredCourses}.length === 0 }" class="sapUiSmallMarginTop textGray" />
+                                        <Text text="Click the + icon to add courses" visible="{= ${courseModel>/registeredCourses}.length === 0 }" class="textGray" />
+                                    </VBox>
 
-                                        </VBox>
+                                    <!-- Registered List -->
+                                    <List items="{courseModel>/registeredCourses}" mode="Delete" delete=".onRemoveCourse" class="sapUiSmallMarginBottom">
+                                        <StandardListItem title="{courseModel>code}" description="{courseModel>credits} Credits" />
+                                    </List>
 
-                                        <List items="{courseModel>/registeredCourses}" noDataText="No courses selected. Click the + icon to add courses.">
-                                            <StandardListItem title="{courseModel>code}" description="{courseModel>credits} Credits" />
-                                        </List>
+                                    <VBox class="sapUiMediumMarginTop">
+                                        <Button text="Register for Courses" type="Accept" width="100%" 
+                                            enabled="{= !${courseModel>/ui/isWarningVisible} &amp;&amp; ${courseModel>/registeredCourses}.length > 0 }" 
+                                            press=".onRegister"
+                                            class="sapUiTinyMarginBottom" />
+                                        <Button text="Save Draft" type="Default" width="100%" />
+                                    </VBox>
 
-                                        <VBox class="sapUiMediumMarginTop">
-                                            <Button text="Register for Courses" type="Accept" width="100%" enabled="{= ${courseModel>/ui/totalCredits} >= ${courseModel>/student/minCredits} && ${courseModel>/ui/totalCredits} <= ${courseModel>/student/maxCredits} }" class="sapUiTinyMarginBottom" />
-                                            <Button text="Save Draft" type="Default" width="100%" />
-                                        </VBox>
-
-                                        <MessageStrip text="Note: Registration is subject to course availability and prerequisite requirements." showIcon="true" type="Information" class="sapUiSmallMarginTop" />
-                                    </content>
-                                </Panel>
+                                    <MessageStrip text="Note: Registration is subject to course availability and prerequisite requirements." showIcon="true" type="Information" class="sapUiSmallMarginTop" />
+                                </VBox>
                             </VBox>
                         </layout:Grid>
                     </content>
