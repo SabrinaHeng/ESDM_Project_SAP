@@ -1,0 +1,64 @@
+{
+    "student": {
+        "name": "Brendan Chia",
+        "role": "Lab Tester",
+        "avatar": "test-resources/sap/tnt/images/avatar_1.png",
+        "minCredits": 12,
+        "maxCredits": 21
+    },
+    "availableCourses": [
+        {
+            "code": "BCS3013",
+            "name": "Software Engineering",
+            "lecturer": "Dr. Siti Aminah",
+            "schedule": "Mon 8:00-11:00\nWed 2:00-4:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "01"
+        },
+        {
+            "code": "BCS3023",
+            "name": "Database Systems",
+            "lecturer": "Prof. Ahmad Zaki",
+            "schedule": "Tue 9:00-12:00\nThu 3:00-5:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "02"
+        },
+        {
+            "code": "BCS3033",
+            "name": "Web Application Development",
+            "lecturer": "Dr. Nurul Huda",
+            "schedule": "Wed 8:00-11:00\nFri 2:00-4:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "01"
+        },
+        {
+            "code": "BCS3043",
+            "name": "Computer Networks",
+            "lecturer": "Dr. Muhammad Faiz",
+            "schedule": "Mon 2:00-5:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "03"
+        },
+        {
+            "code": "BCS3053",
+            "name": "Operating Systems",
+            "lecturer": "Dr. Tan Wei Hong",
+            "schedule": "Thu 8:00-11:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "01"
+        }
+    ],
+    "registeredCourses": [],
+    "ui": {
+        "totalCredits": 0,
+        "creditStatus": "None",
+        "creditStatusText": "",
+        "isWarningVisible": false,
+        "warningMessage": ""
+    }
+}
