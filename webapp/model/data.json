@@ -51,6 +51,51 @@
             "credits": 3,
             "type": "Core",
             "section": "01"
+        },
+        {
+            "code": "BCS3063",
+            "name": "Artificial Intelligence",
+            "lecturer": "Assoc. Prof. Sarah Lee",
+            "schedule": "Fri 9:00-12:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "01"
+        },
+        {
+            "code": "BCS3073",
+            "name": "Data Science Essentials",
+            "lecturer": "Dr. Lim Keng",
+            "schedule": "Tue 2:00-5:00",
+            "credits": 3,
+            "type": "Elective",
+            "section": "02"
+        },
+        {
+            "code": "BCS3083",
+            "name": "Cloud Computing",
+            "lecturer": "Dr. Ramesh Kumar",
+            "schedule": "Thu 11:00-1:00",
+            "credits": 3,
+            "type": "Elective",
+            "section": "01"
+        },
+        {
+            "code": "BCS3093",
+            "name": "Cyber Security",
+            "lecturer": "Dr. Huraibatul",
+            "schedule": "Mon 11:00-1:00",
+            "credits": 3,
+            "type": "Elective",
+            "section": "01"
+        },
+        {
+            "code": "BCS3103",
+            "name": "Mobile App Development",
+            "lecturer": "Mr. Steven Tan",
+            "schedule": "Wed 9:00-12:00",
+            "credits": 3,
+            "type": "Core",
+            "section": "01"
         }
     ],
     "registeredCourses": [],

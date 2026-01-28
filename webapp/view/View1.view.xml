@@ -44,11 +44,16 @@
         </tnt:sideContent>
         <tnt:mainContents>
             <App>
-                <Page showHeader="false" backgroundDesign="Solid">
+                <Page showHeader="false" backgroundDesign="Solid" enableScrolling="true">
                     <content>
-                        <layout:Grid defaultSpan="XL9 L9 M12 S12" hSpacing="1">
-                            <!-- Left: Course List -->
-                            <VBox class="sapUiSmallMargin">
+                        <!-- Full Screen Flex Layout -->
+                        <HBox width="100%" height="auto" class="sapUiTinyMarginTop" wrap="Wrap">
+                            <!-- Left: Course List (70%) -->
+                            <VBox width="70%" class="sapUiSmallMarginEnd">
+                                <layoutData>
+                                    <FlexItemData styleClass="sapUiResponsiveContentPadding" growFactor="1" minWidth="600px" />
+                                </layoutData>
+                                
                                 <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiMediumMarginBottom">
                                     <SearchField placeholder="Search by course name, code, or lecturer..." width="100%" /> 
                                     <Button text="Filters" icon="sap-icon://filter" class="sapUiSmallMarginBegin" />
@@ -84,18 +89,17 @@
                                     </items>
                                 </Table>
                                 
-                                <!-- Footer within the main content area for scroll -->
                                 <HBox justifyContent="Center" class="customFooter">
                                     <Text text="Copy right @ 2021 LMS Dashboard" />
                                 </HBox>
                             </VBox>
 
-                            <!-- Right: Validator Panel -->
-                            <layout:layoutData>
-                                <layout:GridData span="XL3 L3 M12 S12" />
-                            </layout:layoutData>
-                            
-                            <VBox class="sapUiSmallMargin">
+                            <!-- Right: Validator Panel (30%) -->
+                            <VBox width="30%" class="sapUiSmallMarginBegin">
+                                <layoutData>
+                                    <FlexItemData growFactor="0" minWidth="300px" />
+                                </layoutData>
+                                
                                 <!-- Card-like Container -->
                                 <VBox class="validatorPanel">
                                     <Title text="Pending Registration" titleStyle="H4" class="pendingCardTitle" />
@@ -108,10 +112,9 @@
                                             <Title text=" / {courseModel>/student/maxCredits} Credits" titleStyle="H3" class="sapUiTinyMarginBegin" />
                                         </HBox>
 
-                                        <!-- Custom Warning/Success Badge -->
                                         <!-- Red Badge -->
                                         <core:HTML content='&lt;div class="creditBadgeError"&gt;{courseModel>/ui/warningMessage}&lt;/div&gt;' 
-                                                   visible="{= ${courseModel>/ui/isWarningVisible} &amp;&amp; ${courseModel>/ui/warningType} === 'Error' || ${courseModel>/ui/warningType} === 'Warning' }" />
+                                                   visible="{= ${courseModel>/ui/isWarningVisible} &amp;&amp; (${courseModel>/ui/warningType} === 'Error' || ${courseModel>/ui/warningType} === 'Warning') }" />
                                         
                                         <!-- Green Badge -->
                                         <core:HTML content='&lt;div class="creditBadgeSuccess"&gt;Credit Hours OK&lt;/div&gt;'
@@ -137,7 +140,7 @@
                                     <MessageStrip text="Note: Registration is subject to course availability and prerequisite requirements." showIcon="true" type="Information" class="sapUiSmallMarginTop" />
                                 </VBox>
                             </VBox>
-                        </layout:Grid>
+                        </HBox>
                     </content>
                 </Page>
             </App>
